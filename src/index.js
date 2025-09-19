@@ -10,7 +10,7 @@ app.get("/", (req, res) => {
 
 const prepareAndStartServer = () => {
     app.listen(PORT, () => {
-        console.log(`Server is started on ${PORT}`);
+        console.log(`Server is started on PORT: ${PORT}`);
     })
 }
 
