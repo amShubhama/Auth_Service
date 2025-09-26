@@ -24,7 +24,7 @@ class UserService {
             const user = await this.userRepository.getByEmail(email);
 
             // step 2 -> compare incoming plain password with stores encrypted password
-            const passwordsMatch = this.checkPassword(plainPassword, user.password);
+            const passwordsMatch = this.#checkPassword(plainPassword, user.password);
 
             if (!passwordsMatch) {
                 console.log("Password doesn't match");
@@ -32,7 +32,7 @@ class UserService {
             }
 
             // step 3 -> if passwords match then create a token and send it to the user
-            const newJWT = this.createToken({ email: user.email, id: user.id });
+            const newJWT = this.#createToken({ email: user.email, id: user.id });
             return newJWT;
 
         } catch (error) {
@@ -41,7 +41,7 @@ class UserService {
         }
     }
 
-    createToken(user) {
+    #createToken(user) {
         try {
             const result = jwt.sign(user, JWT_KEY, { expiresIn: '1h' });
             return result;
@@ -51,7 +51,7 @@ class UserService {
         }
     }
 
-    verifyToken(token) {
+    #verifyToken(token) {
         try {
             const response = jwt.verify(token, JWT_KEY);
             return response;
@@ -61,7 +61,7 @@ class UserService {
         }
     }
 
-    checkPassword(userInputPlainPassword, encryptedPassword) {
+    #checkPassword(userInputPlainPassword, encryptedPassword) {
         try {
             return bcrypt.compareSync(userInputPlainPassword, encryptedPassword);
         } catch (error) {
