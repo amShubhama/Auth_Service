@@ -15,7 +15,7 @@ router.post(
     UserController.signIn
 );
 router.get(
-    '/isAuthenticated',
+    '/auth/verify',
     UserController.isAuthenticated,
 );
 router.get(
